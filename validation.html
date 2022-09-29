@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Registraion Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Registraion Form</h2>
+        </div>
+        <form action="#" class="form" id="form">
+
+            <!-- <div class="form-control">
+
+                    <label for="">Full Name</label>
+                    <input type="text" id="fullname" placeholder="Enter Your Full Name" autocomplete="off">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <small>Error Message</small>
+
+                </div> -->
+
+
+            <div class="form-control">
+
+                <label for="">Username</label>
+                <input type="text" id="username" placeholder="Enter Your User Name" autocomplete="off">
+                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error Message</small>
+
+            </div>
+
+
+            <div class="form-control">
+
+                <label for="">E-mail</label>
+                <input type="email" id="email" placeholder="Enter Your E-mail" autocomplete="off">
+                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error Message</small>
+
+            </div>
+
+
+            <div class="form-control">
+
+                <label for="">Mobile Number</label>
+                <input type="number" id="mobile" placeholder="Enter Your Mobile Number" autocomplete="off">
+                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error Message</small>
+
+            </div>
+
+
+            <div class="form-control">
+
+                <label for="">Password</label>
+                <input type="password" id="pwd" placeholder="Enter Your Password" autocomplete="off">
+                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error Message</small>
+
+            </div>
+
+
+            <div class="form-control">
+
+                <label for="">Confirm Password</label>
+                <input type="password" id="cnfpwd" placeholder="Confirm Your Password" autocomplete="off">
+                <i class="fa-regular fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error Message</small>
+
+            </div>
+
+            <input type="submit" class="btn" value="Submit">
+
+
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('form');
+        // const form = document.getElementById('form');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const mobile = document.getElementById('mobile');
+        const pwd = document.getElementById('pwd');
+        const cnfpwd = document.getElementById('cnfpwd');
+
+
+        // add event 
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validate();
+        })
+
+        // more email validate 
+
+        const isEmail = (emailVal) => {
+            var atSymbol = emailVal.indexOf("@");
+            if(atSymbol<1) return false;
+
+            var dot = emailVal.lastIndexOf('.');
+
+            if(dot <= atSymbol + 3) return false;
+            if(dot === emailVal.length - 1) return false;
+
+            return true;
+        } 
+
+        // define the validate function 
+
+        const validate = () => {
+
+            const usernameVal = username.value.trim();
+            const emailVal = email.value.trim();
+            const mobileVal = mobile.value.trim();
+            const pwdVal = pwd.value.trim();
+            const cnfpwdVal = cnfpwd.value.trim();
+
+
+            // validate username 
+
+            if(usernameVal === ""){
+                setErrorMsg(username,'Username cannot be blank');
+            }
+            
+            else if(usernameVal.length<= 4){
+                setErrorMsg(username,'Username requires min 5 characters');
+            }
+
+            else{
+                setSuccessMsg(username);
+            }
+
+
+
+
+            // validate Email 
+
+            if(emailVal === ""){
+                setErrorMsg(email,'Email cannot be blank');
+            }
+            
+            else if(!isEmail(emailVal)){
+                setErrorMsg(email,'Please Enter a valid email');
+            }
+
+            else{
+                setSuccessMsg(email);
+            }
+
+
+            // validate Mobile 
+
+            if(mobileVal === ""){
+                setErrorMsg(mobile,'Mobile Number cannot be blank');
+            }
+            
+            else if(mobileVal.length != 10){
+                setErrorMsg(mobile,'Please Enter a valid Mobile Number');
+            }
+
+            else{
+                setSuccessMsg(mobile);
+            }
+
+
+            // validate Password 
+
+            if(pwdVal === ""){
+                setErrorMsg(pwd,'Password cannot be blank');
+            }
+            
+            else if(pwdVal.length <= 5 ){
+                setErrorMsg(pwd,'Please Enter a valid Password of Minimum 6 Characters');
+            }
+
+            else{
+                setSuccessMsg(pwd);
+            }
+
+
+            // validate Password 
+
+            if(cnfpwdVal === ""){
+                setErrorMsg(cnfpwd,'Confirm Password cannot be blank');
+            }
+            
+            else if(cnfpwdVal != pwdVal){
+                setErrorMsg(cnfpwd,'Password are not Matching');
+            }
+
+            else{
+                setSuccessMsg(cnfpwd);
+            }
+
+
+            function setErrorMsg(input,errormsgs){
+                const formControl = input.parentElement;
+                const small = formControl.querySelector('small');
+                formControl.className = "form-control error";
+                small.innerText = errormsgs;
+            }
+
+            function setSuccessMsg(input){
+                const formControl = input.parentElement;
+                formControl.className = "form-control success";
+            }
+
+        }
+    </script>
+</body>
+
+</html>
